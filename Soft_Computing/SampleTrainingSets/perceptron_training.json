@@ -1,0 +1,6 @@
+{"trainingPatterns":[
+{"perceptronInputVectors":[1,0,0,0],"perceptronOutputVectors":[1,0,0,0]},
+{"perceptronInputVectors":[0,1,0,0],"perceptronOutputVectors":[0,1,0,0]},
+{"perceptronInputVectors":[0,0,1,0],"perceptronOutputVectors":[0,0,1,0]},
+{"perceptronInputVectors":[0,0,0,1],"perceptronOutputVectors":[0,0,0,1]}
+]}

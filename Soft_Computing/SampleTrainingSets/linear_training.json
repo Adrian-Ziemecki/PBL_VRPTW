@@ -1,0 +1,1 @@
+{"trainingPatterns":[{"inputVectors":[0.0,4.0,1.0],"outputVector":4.0},{"inputVectors":[1.0,4.0,2.0],"outputVector":5.0},{"inputVectors":[-1.0,4.0,3.0],"outputVector":3.0}]}

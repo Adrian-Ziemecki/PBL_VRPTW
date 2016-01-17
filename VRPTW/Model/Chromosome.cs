@@ -10,6 +10,7 @@ namespace VRPTW.Model
     {
         public int[] Route { get; set; }
         protected static Random rand = new Random((int)DateTime.Now.Ticks);
+        protected static Double mutationRate = 0.1;
 
         public Chromosome(int numberOfCustomerNodes)
         {
@@ -80,7 +81,51 @@ namespace VRPTW.Model
 
         public void MutateChromosome()
         {
-
+            Double chance = rand.NextDouble();
+            int temp;
+            if (chance < mutationRate)
+            {
+                // the mutation will take place, mutation type is the same as in PDF
+                int mutationType = rand.Next(1, 9);
+                switch (mutationType)
+                {
+                    case 1:
+                        int r = rand.Next(0, Route.Length - 2);
+                        temp = Route[r];
+                        Route[r] = Route[r + 1];
+                        Route[r + 1] = r;
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        int r1 = rand.Next(0, Route.Length - 1);
+                        int r2 = rand.Next(0, Route.Length - 1);
+                        while (r1 != r2)    // make sure that r1 and r2 are different
+                        {
+                            r2 = rand.Next(0, Route.Length - 1);
+                        }
+                        temp = Route[r1];
+                        Route[r1] = Route[r2];
+                        Route[r2] = temp;
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        break;
+                }
+            }
+            else
+            {
+                // do nothing
+            }
         }
 
         // Print chromosome route to readable form

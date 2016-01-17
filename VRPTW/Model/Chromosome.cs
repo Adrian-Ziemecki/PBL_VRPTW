@@ -10,7 +10,7 @@ namespace VRPTW.Model
     {
         public int[] Route { get; set; }
         protected static Random rand = new Random((int)DateTime.Now.Ticks);
-        protected static Double mutationRate = 0.1;
+        protected static Double mutationRate = 1.0;
 
         public Chromosome(int numberOfCustomerNodes)
         {
@@ -79,7 +79,7 @@ namespace VRPTW.Model
             }
         }
 
-        public void MutateChromosome()
+        public void MutateChromosome(int mutationType = 0)
         {
             Double chance = rand.NextDouble();
             int temp1, temp2, rand1, rand2;
@@ -87,7 +87,7 @@ namespace VRPTW.Model
             if (chance < mutationRate)
             {
                 // the mutation will take place, mutation type is the same as in PDF
-                int mutationType = rand.Next(1, 9);
+                if (mutationType == 0) mutationType = rand.Next(1, 9);
                 switch (mutationType)
                 {
                     case 1:
@@ -100,11 +100,11 @@ namespace VRPTW.Model
                         RouteList = Route.ToList<int>();
                         rand1 = rand.Next(0, RouteList.Count - 2);
                         rand2 = rand.Next(0, RouteList.Count - 2);
-                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        while (rand1 == rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
                         temp1 = RouteList[rand1];
                         temp2 = RouteList[rand1 + 1];
                         RouteList.RemoveAt(rand1);
-                        RouteList.RemoveAt(rand1 + 1);
+                        RouteList.RemoveAt(rand1);
                         RouteList.Insert(rand2, temp1);
                         RouteList.Insert(rand2 + 1, temp2);
                         Route = RouteList.ToArray<int>();
@@ -113,11 +113,11 @@ namespace VRPTW.Model
                         RouteList = Route.ToList<int>();
                         rand1 = rand.Next(0, RouteList.Count - 2);
                         rand2 = rand.Next(0, RouteList.Count - 2);
-                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        while (rand1 == rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
                         temp1 = RouteList[rand1];
                         temp2 = RouteList[rand1 + 1];
                         RouteList.RemoveAt(rand1);
-                        RouteList.RemoveAt(rand1 + 1);
+                        RouteList.RemoveAt(rand1);
                         RouteList.Insert(rand2, temp2);
                         RouteList.Insert(rand2 + 1, temp1);
                         Route = RouteList.ToArray<int>();
@@ -125,7 +125,7 @@ namespace VRPTW.Model
                     case 4:
                         rand1 = rand.Next(0, Route.Length - 1);
                         rand2 = rand.Next(0, Route.Length - 1);
-                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 1);  // make sure that rand1 and rand2 are different
+                        while (rand1 == rand2) rand2 = rand.Next(0, Route.Length - 1);  // make sure that rand1 and rand2 are different
                         temp1 = Route[rand1];
                         Route[rand1] = Route[rand2];
                         Route[rand2] = temp1;
@@ -133,7 +133,7 @@ namespace VRPTW.Model
                     case 5:
                         rand1 = rand.Next(0, Route.Length - 2);
                         rand2 = rand.Next(0, Route.Length - 2);
-                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        while (rand1 == rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
                         RouteList = Route.ToList<int>();
                         temp1 = RouteList[rand1];
                         RouteList[rand1] = RouteList[rand2];
@@ -145,7 +145,7 @@ namespace VRPTW.Model
                     case 6:
                         rand1 = rand.Next(0, Route.Length - 2);
                         rand2 = rand.Next(0, Route.Length - 2);
-                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        while (rand1 == rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
                         temp1 = Route[rand1];
                         temp2 = Route[rand1 + 1];
                         Route[rand1] = Route[rand2];

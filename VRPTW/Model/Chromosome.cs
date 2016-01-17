@@ -82,7 +82,8 @@ namespace VRPTW.Model
         public void MutateChromosome()
         {
             Double chance = rand.NextDouble();
-            int temp;
+            int temp1, temp2, rand1, rand2;
+            List<int> RouteList;
             if (chance < mutationRate)
             {
                 // the mutation will take place, mutation type is the same as in PDF
@@ -90,29 +91,67 @@ namespace VRPTW.Model
                 switch (mutationType)
                 {
                     case 1:
-                        int r = rand.Next(0, Route.Length - 2);
-                        temp = Route[r];
-                        Route[r] = Route[r + 1];
-                        Route[r + 1] = r;
+                        rand1 = rand.Next(0, Route.Length - 2);
+                        temp1 = Route[rand1];
+                        Route[rand1] = Route[rand1 + 1];
+                        Route[rand1 + 1] = temp1;
                         break;
                     case 2:
+                        RouteList = Route.ToList<int>();
+                        rand1 = rand.Next(0, RouteList.Count - 2);
+                        rand2 = rand.Next(0, RouteList.Count - 2);
+                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        temp1 = RouteList[rand1];
+                        temp2 = RouteList[rand1 + 1];
+                        RouteList.RemoveAt(rand1);
+                        RouteList.RemoveAt(rand1 + 1);
+                        RouteList.Insert(rand2, temp1);
+                        RouteList.Insert(rand2 + 1, temp2);
+                        Route = RouteList.ToArray<int>();
                         break;
                     case 3:
+                        RouteList = Route.ToList<int>();
+                        rand1 = rand.Next(0, RouteList.Count - 2);
+                        rand2 = rand.Next(0, RouteList.Count - 2);
+                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        temp1 = RouteList[rand1];
+                        temp2 = RouteList[rand1 + 1];
+                        RouteList.RemoveAt(rand1);
+                        RouteList.RemoveAt(rand1 + 1);
+                        RouteList.Insert(rand2, temp2);
+                        RouteList.Insert(rand2 + 1, temp1);
+                        Route = RouteList.ToArray<int>();
                         break;
                     case 4:
-                        int r1 = rand.Next(0, Route.Length - 1);
-                        int r2 = rand.Next(0, Route.Length - 1);
-                        while (r1 != r2)    // make sure that r1 and r2 are different
-                        {
-                            r2 = rand.Next(0, Route.Length - 1);
-                        }
-                        temp = Route[r1];
-                        Route[r1] = Route[r2];
-                        Route[r2] = temp;
+                        rand1 = rand.Next(0, Route.Length - 1);
+                        rand2 = rand.Next(0, Route.Length - 1);
+                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 1);  // make sure that rand1 and rand2 are different
+                        temp1 = Route[rand1];
+                        Route[rand1] = Route[rand2];
+                        Route[rand2] = temp1;
                         break;
                     case 5:
+                        rand1 = rand.Next(0, Route.Length - 2);
+                        rand2 = rand.Next(0, Route.Length - 2);
+                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        RouteList = Route.ToList<int>();
+                        temp1 = RouteList[rand1];
+                        RouteList[rand1] = RouteList[rand2];
+                        RouteList.Insert(rand1 + 1, RouteList[rand2 + 1]);
+                        RouteList[rand2 + 1] = temp1;
+                        RouteList.RemoveAt(rand2 + 2);
+                        Route = RouteList.ToArray<int>();
                         break;
                     case 6:
+                        rand1 = rand.Next(0, Route.Length - 2);
+                        rand2 = rand.Next(0, Route.Length - 2);
+                        while (rand1 != rand2) rand2 = rand.Next(0, Route.Length - 2);  // make sure that rand1 and rand2 are different
+                        temp1 = Route[rand1];
+                        temp2 = Route[rand1 + 1];
+                        Route[rand1] = Route[rand2];
+                        Route[rand1 + 1] = Route[rand2 + 1];
+                        Route[rand2] = temp1;
+                        Route[rand2 + 1] = temp2;
                         break;
                     case 7:
                         break;

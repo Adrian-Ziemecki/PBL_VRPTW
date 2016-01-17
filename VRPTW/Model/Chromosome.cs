@@ -63,7 +63,19 @@ namespace VRPTW.Model
 
         public void MakeRandomChromosome() 
         {
-
+            // Generate a list of ints from 0 to Route.Count
+            List<int> nums = new List<int>();
+            for (int i = 0; i < Route.Length; i++)
+            {
+                nums.Add(i);
+            }
+            // Add a random element from list of ints and remove this element from list (so there won't be duplicates)
+            for (int i = 0; i < Route.Length; i++)
+            {
+                int r = rand.Next(0, nums.Count);
+                Route[i] = nums[r];
+                nums.RemoveAt(r);
+            }
         }
 
         public void MutateChromosome()

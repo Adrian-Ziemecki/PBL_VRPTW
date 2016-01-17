@@ -47,6 +47,7 @@ namespace VRPTW.Model
             {
                 //Console.Out.WriteLine(fileContent[i]);
                 string[] customerParams = fileContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (customerParams.Length == 0) continue;
                 Node n = new Node();
                 n.CustomerNr = Int32.Parse(customerParams[0]);
                 n.X = Int32.Parse(customerParams[1]);

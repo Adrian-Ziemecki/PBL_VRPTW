@@ -24,7 +24,6 @@ namespace VRPTW
             output_textbox.Text += "init chromo: \r\n" + c.ChromosomeString() + "\r\n";
             c.MutateChromosome(6);
             output_textbox.Text += "mutated chromo: \r\n" + c.ChromosomeString() + "\r\n";
-
         }
 
         private void openFileDialog_btn_Click(object sender, EventArgs e)
@@ -33,13 +32,17 @@ namespace VRPTW
             if (result == DialogResult.OK) // Test result.
             {
                 dataFile = new DataFile(openFileDialog1.FileName);
+                chart1.Series["Series1"].Points.Clear();
                 output_textbox.Clear();
                 output_textbox.Text += "Vehicle number: " + dataFile.VehicleNumber + "; Vehicle capacity: " + dataFile.VehicleCapacity + "\r\n";
                 output_textbox.Text += "Nodes:\r\n";
+                output_textbox.Text += "ID\tx\ty\tDemand\tReady\tDue\tService\r\n";
                 foreach (Node n in dataFile.NodeList)
                 {
-                    output_textbox.Text += "ID:" + n.CustomerNr + "\tx: " + n.X + "\ty: " + n.Y + "\tDemand: " + n.Demand + "\tReady: " + n.ReadyTime + "   \tDue: " + n.DueDate + "    \tService: " + n.Service + "\r\n";
+                    output_textbox.Text += n.CustomerNr + "\t" + n.X + "\t" + n.Y + "\t" + n.Demand + "\t" + n.ReadyTime + "\t" + n.DueDate + "\t" + n.Service + "\r\n";
+                    chart1.Series["Series1"].Points.AddXY(n.X, n.Y);
                 }
+                chart1.Series["Series1"].Points[0].Color = Color.Red;
             }
         }
     }

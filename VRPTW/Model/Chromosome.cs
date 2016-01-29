@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VRPTW.Controller;
 
 namespace VRPTW.Model
 {
@@ -13,6 +14,7 @@ namespace VRPTW.Model
         public Double Fitness;
         protected static Random rand = new Random((int)DateTime.Now.Ticks);
         protected static Double mutationRate = 1.0;
+        private LocationController locationController = new LocationController();
 
         public Chromosome(int numberOfCustomerNodes)
         {
@@ -203,6 +205,100 @@ namespace VRPTW.Model
             }
 
             return false;
+        }
+
+        public double fitnessFunction(Map map)
+        {
+
+            double currentTime = 0;
+            double currentVehicleLoad = 0;
+            double maxVehicleLoad = map.VehicleCapacity;
+            int availableVehicles = map.NumberOfVehicles;
+            int vehiclesUsed = 1;
+
+            List<int> singleRoute = new List<int>();            
+            Node depo = map.Locations.Where(l => l.CustomerNr == 0).Single();
+            singleRoute.Add(depo.CustomerNr);
+            Node previousNode = depo;
+
+            Routes.Clear();
+
+            for (int i = 0; i < Nodes.Length; i++)
+            {
+                Node currentNode = map.Locations.Where(l => l.CustomerNr == Nodes[i]).Single();
+
+                if (vehiclesUsed > availableVehicles){ 
+                    return -1; 
+                }
+
+                if(currentVehicleLoad + currentNode.Demand <= maxVehicleLoad)
+                {
+                    currentVehicleLoad += currentNode.Demand;
+                    currentTime = locationController.DistanceBetweenLocations(previousNode, currentNode);
+                    if (currentTime < currentNode.ReadyTime){ 
+                        currentTime += (currentNode.ReadyTime - currentTime); 
+                    }
+
+                    if (currentTime + currentNode.Service < currentNode.DueDate)
+                    {
+                        currentTime += currentNode.Service;
+
+                        if (currentTime + locationController.DistanceBetweenLocations(currentNode, depo) < depo.DueDate)
+                        {
+                            singleRoute.Add(currentNode.CustomerNr);
+                            previousNode = currentNode;
+                        }
+                        else
+                        {
+                            singleRoute.Add(depo.CustomerNr);
+                            Routes.Add(singleRoute.ToArray());
+                            previousNode = depo;
+                            currentTime = 0;
+                            currentVehicleLoad = 0;
+                            vehiclesUsed++;
+                        }
+                    }
+                    else
+                    {
+                        singleRoute.Add(depo.CustomerNr);
+                        Routes.Add(singleRoute.ToArray());
+                        previousNode = depo;
+                        currentTime = 0;
+                        currentVehicleLoad = 0;
+                        vehiclesUsed++;
+                    }
+                }
+                
+            }
+            int visitedNodes = 0;
+            foreach (int[] singleR in Routes)
+            {
+                foreach (int place in singleR)
+                {
+                    if (place != 0){ 
+                        visitedNodes++; 
+                    }
+                }
+            }
+
+            if (visitedNodes == Nodes.Length)
+            {
+                double totalPath = 0;
+                foreach (int[] singleR in Routes)
+                {
+                    for (int place = 1; place < singleR.Length; place++ )
+                    {
+                        Node place1 = map.Locations.Where(l => l.CustomerNr == singleR[place - 1]).Single();
+                        Node place2 = map.Locations.Where(l => l.CustomerNr == singleR[place]).Single();
+                        totalPath += locationController.DistanceBetweenLocations(place1, place2);
+                    }
+                }
+                return totalPath;
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace VRPTW
         {
             InitializeComponent();
             Chromosome c = new Chromosome(10);
-            c.Route = new int[] {0,1,2,3,4,5,6,7,8,9};
+            c.Nodes = new int[] {0,1,2,3,4,5,6,7,8,9};
             output_textbox.Text += "init chromo: \r\n" + c.ChromosomeString() + "\r\n";
             c.MutateChromosome(6);
             output_textbox.Text += "mutated chromo: \r\n" + c.ChromosomeString() + "\r\n";

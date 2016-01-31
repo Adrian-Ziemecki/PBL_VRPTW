@@ -110,7 +110,7 @@ namespace VRPTW.Controller
                     case 0:
                         int reproductionChromosome = selectChromosome(distribution, populationSize);
                         newGeneration[i] = currentGeneration[reproductionChromosome];
-                        newGeneration[i].FitnessFunction(map);
+                        newGeneration[i].Fitness = newGeneration[i].FitnessFunction(map);
                         break;
                     case 1:
                         int parent1 = selectChromosome(distribution, populationSize);
@@ -122,16 +122,16 @@ namespace VRPTW.Controller
                         int startingIndex = rand.Next(nodeSize);
                         int endingIndex = rand.Next(startingIndex, nodeSize);
                         newGeneration[i].CrossChromosomeWithParents(currentGeneration[parent1], currentGeneration[parent2], startingIndex, endingIndex);
-                        newGeneration[i].FitnessFunction(map);
+                        newGeneration[i].Fitness = newGeneration[i].FitnessFunction(map);
                         newGeneration[i + 1].CrossChromosomeWithParents(currentGeneration[parent2], currentGeneration[parent1], startingIndex, endingIndex);
-                        newGeneration[i + 1].FitnessFunction(map);
+                        newGeneration[i + 1].Fitness = newGeneration[i + 1].FitnessFunction(map);
                         i++;
                         break;
                     case 2:
                         int mutationChromosome = selectChromosome(distribution, populationSize);
                         newGeneration[i] = currentGeneration[i];
                         newGeneration[i].MutateChromosome();
-                        newGeneration[i].FitnessFunction(map);
+                        newGeneration[i].Fitness = newGeneration[i].FitnessFunction(map);
                         break;
                 }
             }
@@ -142,7 +142,7 @@ namespace VRPTW.Controller
                 while (newGeneration[i].Fitness < 0)
                 {
                     newGeneration[i].MakeRandomChromosome();
-                    newGeneration[i].FitnessFunction(map);
+                    newGeneration[i].Fitness = newGeneration[i].FitnessFunction(map);
                 }
             }
 

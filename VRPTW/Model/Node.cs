@@ -21,5 +21,14 @@ namespace VRPTW.Model
         {
             Connections = new List<int>();
         }
+
+        public String NodeString()
+        {
+            String node = "Nr: " + CustomerNr + ", X: " + X + ", Y: " + Y +
+                ", Demand: " + Demand + ", ReadyTime: " + ReadyTime +
+                ", DueDate: " + DueDate + ", Service: " + Service;
+
+            return node;
+        }
     }
 }

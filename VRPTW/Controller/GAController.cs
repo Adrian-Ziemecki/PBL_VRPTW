@@ -55,7 +55,7 @@ namespace VRPTW.Controller
                 do
                 {
                     c.MakeRandomChromosome();
-                    c.FitnessFunction(map);
+                    c.Fitness = c.FitnessFunction(map);
                 } while (c.Fitness < 0);
                 Solutions.Add(c);
             }

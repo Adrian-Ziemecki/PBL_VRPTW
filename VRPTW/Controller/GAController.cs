@@ -45,12 +45,19 @@ namespace VRPTW.Controller
             // Generate random initial chromosomes
             for (int i = 0; i < PopulationSize; i++)
             {
-                Solutions[i] = new Chromosome(numberOfClients);
+                /*Solutions[i] = new Chromosome(numberOfClients);
                 do
                 {
                     Solutions[i].MakeRandomChromosome();
                     Solutions[i].FitnessFunction(map);
-                } while (Solutions[i].Fitness < 0);
+                } while (Solutions[i].Fitness < 0);*/
+                Chromosome c = new Chromosome(numberOfClients);
+                do
+                {
+                    c.MakeRandomChromosome();
+                    c.FitnessFunction(map);
+                } while (c.Fitness < 0);
+                Solutions.Add(c);
             }
 
             for (int i = 0; i < PopulationSize; i++)
@@ -64,6 +71,23 @@ namespace VRPTW.Controller
         {
             // Currently empty
             return false;
+        }
+
+        public void PrintSolutions()
+        {
+            foreach (Chromosome c in Solutions) {
+                System.Console.WriteLine(c.ChromosomeString());
+            }
+        }
+
+        public string GetSolutionText()
+        {
+            string s = "";
+            foreach (Chromosome c in Solutions)
+            {
+                s = s + c.ChromosomeString() + "\r\n";
+            }
+            return s;
         }
     }
 }

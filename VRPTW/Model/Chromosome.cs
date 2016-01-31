@@ -54,7 +54,7 @@ namespace VRPTW.Model
                         // Generally, if it gets here, then the whole chromosome will get messed up anyway.
                         if (parentIndex == parentStartingIndex)
                         {
-                            Nodes[childIndex] = -1;
+                            //Nodes[childIndex] = -1;
                             assignedNode = true;
                         }
                     }

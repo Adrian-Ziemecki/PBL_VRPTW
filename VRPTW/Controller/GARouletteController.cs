@@ -64,7 +64,8 @@ namespace VRPTW.Controller
             // calculating the fitness for minimum with resprect to maxValue
             for (int i = 0; i < populationSize; i++)
             {
-                newGeneration[i] = new Chromosome(nodeSize);
+                /*newGeneration[i] = new Chromosome(nodeSize);*/
+                newGeneration.Add(new Chromosome(nodeSize));
                 fitnessWithMaxMinValue[i] = maxValue + minValue - currentGeneration[i].Fitness;
             }
 

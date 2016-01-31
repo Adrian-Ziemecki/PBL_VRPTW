@@ -9,13 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using VRPTW.Controller;
 using VRPTW.Model;
 
 namespace VRPTW
 {
     public partial class Form1 : Form
     {
-        DataFile dataFile;
+        DataFile dataFile = null;
         Map map = new Map();
         ToolTip tooltip = new ToolTip();
 
@@ -92,6 +93,23 @@ namespace VRPTW
                 foreach (DataPoint p in chart1.Series["Series1"].Points) p.Color = Color.DodgerBlue;
                 chart1.Series["Series1"].Points[0].Color = Color.Red;
             }
+        }
+
+        private void start_btn_Click(object sender, EventArgs e)
+        {
+            if (dataFile == null) return;
+
+            Map m = new Map();
+            m.Locations = dataFile.NodeList;
+            m.NumberOfVehicles = dataFile.VehicleNumber;
+            m.VehicleCapacity = dataFile.VehicleCapacity;
+
+            GAController gac = new GAController();
+            gac.RunSimulation(m);
+            gac.PrintSolutions();
+
+            output_textbox.Clear();
+            output_textbox.Text = gac.GetSolutionText();
         }
     }
 }

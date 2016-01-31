@@ -22,12 +22,12 @@ namespace VRPTW.Model
         }
 
         // Order Crossover
-        public void CrossChromosomeWithParents(Chromosome Parent1, Chromosome Parent2)
+        public void CrossChromosomeWithParents(Chromosome Parent1, Chromosome Parent2, int startingNode, int endingNode)
         {
             clearRoute();
             // Randomly get the part of Parent1 that will be transferred to Child
-            int start = rand.Next(Nodes.Length);
-            int end = rand.Next(start, Nodes.Length);
+            int start = startingNode;
+            int end = endingNode;
             
             // Copy selected part of Parent1 to Child
             for (int i = start; i <= end; i++)

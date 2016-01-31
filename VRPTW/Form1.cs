@@ -23,11 +23,11 @@ namespace VRPTW
         public Form1()
         {
             InitializeComponent();
-            Chromosome c = new Chromosome(10);
+            /*Chromosome c = new Chromosome(10);
             c.Nodes = new int[] {0,1,2,3,4,5,6,7,8,9};
             output_textbox.Text += "init chromo: \r\n" + c.ChromosomeString() + "\r\n";
             c.MutateChromosome(6);
-            output_textbox.Text += "mutated chromo: \r\n" + c.ChromosomeString() + "\r\n";
+            output_textbox.Text += "mutated chromo: \r\n" + c.ChromosomeString() + "\r\n";*/
             
         }
 
@@ -40,7 +40,9 @@ namespace VRPTW
                 map.Locations = dataFile.NodeList;
                 map.NumberOfVehicles = dataFile.VehicleNumber;
                 map.VehicleCapacity = dataFile.VehicleCapacity;
-                chart1.Series["Series1"].Points.Clear();
+                chart1.Series.Clear();
+                chart1.Series.Add("Points");
+                chart1.Series["Points"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
                 output_textbox.Clear();
                 output_textbox.Text += "Vehicle number: " + dataFile.VehicleNumber + "; Vehicle capacity: " + dataFile.VehicleCapacity + "\r\n";
                 output_textbox.Text += "Nodes:\r\n";
@@ -48,9 +50,9 @@ namespace VRPTW
                 foreach (Node n in dataFile.NodeList)
                 {
                     output_textbox.Text += n.CustomerNr + "\t" + n.X + "\t" + n.Y + "\t" + n.Demand + "\t" + n.ReadyTime + "\t" + n.DueDate + "\t" + n.Service + "\r\n";
-                    chart1.Series["Series1"].Points.AddXY(n.X, n.Y);
+                    chart1.Series["Points"].Points.AddXY(n.X, n.Y);
                 }
-                chart1.Series["Series1"].Points[0].Color = Color.Red;
+                chart1.Series["Points"].Points[0].Color = Color.Red;
             }
         }
 
@@ -61,11 +63,11 @@ namespace VRPTW
             if (result.ChartElementType == ChartElementType.DataPoint)
             {
                 tooltip.RemoveAll();
-                foreach (DataPoint p in chart1.Series["Series1"].Points)
+                foreach (DataPoint p in chart1.Series["Points"].Points)
                 {
                     p.Color = Color.DodgerBlue;
                 }
-                chart1.Series["Series1"].Points[0].Color = Color.Red;
+                chart1.Series["Points"].Points[0].Color = Color.Red;
 
                 // index of the clicked point in its series
                 int index = result.PointIndex;
@@ -90,8 +92,8 @@ namespace VRPTW
             else
             {
                 tooltip.RemoveAll();
-                foreach (DataPoint p in chart1.Series["Series1"].Points) p.Color = Color.DodgerBlue;
-                chart1.Series["Series1"].Points[0].Color = Color.Red;
+                foreach (DataPoint p in chart1.Series["Points"].Points) p.Color = Color.DodgerBlue;
+                chart1.Series["Points"].Points[0].Color = Color.Red;
             }
         }
 
@@ -104,12 +106,40 @@ namespace VRPTW
             m.NumberOfVehicles = dataFile.VehicleNumber;
             m.VehicleCapacity = dataFile.VehicleCapacity;
 
-            GAController gac = new GAController();
+            GAController gac = new GAController(50,10000);
             gac.RunSimulation(m);
-            gac.PrintSolutions();
 
             output_textbox.Clear();
             output_textbox.Text = gac.GetSolutionText();
+
+            // remove everything from chart and redraw points
+            chart1.Series.Clear();
+            chart1.Series.Add("Points");
+            chart1.Series["Points"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            foreach (Node n in dataFile.NodeList)
+            {
+                output_textbox.Text += n.CustomerNr + "\t" + n.X + "\t" + n.Y + "\t" + n.Demand + "\t" + n.ReadyTime + "\t" + n.DueDate + "\t" + n.Service + "\r\n";
+                chart1.Series["Points"].Points.AddXY(n.X, n.Y);
+            }
+            chart1.Series["Points"].Points[0].Color = Color.Red;
+
+            Chromosome c = gac.Solutions[0];    // draw routes only for first chromosome for the time being
+            
+            // draw all routes in given chromosome
+            List<int[]> routes = c.Routes;
+            for (int i = 0; i < routes.Count; i++)
+            {
+                int[] route = routes[i];
+                chart1.Series.Add("Route_"+i);
+                for (int j = 0; j < route.Length; j++)
+                {
+                    Node n = dataFile.NodeList[route[j]];
+                    chart1.Series["Route_" + i].Points.AddXY(n.X, n.Y);
+                }
+
+                chart1.Series["Route_" + i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            }
+            
         }
     }
 }

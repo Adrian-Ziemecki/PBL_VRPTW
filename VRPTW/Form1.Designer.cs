@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chooseFile_btn = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.output_textbox = new System.Windows.Forms.TextBox();
@@ -62,30 +62,30 @@
             this.output_textbox.Name = "output_textbox";
             this.output_textbox.ReadOnly = true;
             this.output_textbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.output_textbox.Size = new System.Drawing.Size(427, 372);
+            this.output_textbox.Size = new System.Drawing.Size(499, 372);
             this.output_textbox.TabIndex = 2;
             // 
             // chart1
             // 
-            chartArea2.AxisX.Interval = 10D;
-            chartArea2.AxisX.Maximum = 100D;
-            chartArea2.AxisX.MaximumAutoSize = 100F;
-            chartArea2.AxisX.Minimum = 0D;
-            chartArea2.AxisY.Interval = 10D;
-            chartArea2.AxisY.Maximum = 100D;
-            chartArea2.AxisY.MaximumAutoSize = 100F;
-            chartArea2.AxisY.Minimum = 0D;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            this.chart1.Location = new System.Drawing.Point(566, 12);
+            chartArea1.AxisX.Interval = 10D;
+            chartArea1.AxisX.Maximum = 100D;
+            chartArea1.AxisX.MaximumAutoSize = 100F;
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisY.Interval = 10D;
+            chartArea1.AxisY.Maximum = 100D;
+            chartArea1.AxisY.MaximumAutoSize = 100F;
+            chartArea1.AxisY.Minimum = 0D;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.Location = new System.Drawing.Point(638, 12);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Name = "Series1";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(404, 372);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.Name = "Points";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(627, 589);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
             this.chart1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseMove);
@@ -104,7 +104,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(983, 400);
+            this.ClientSize = new System.Drawing.Size(1277, 613);
             this.Controls.Add(this.start_btn);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.output_textbox);

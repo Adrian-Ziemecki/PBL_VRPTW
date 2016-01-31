@@ -231,15 +231,15 @@ namespace VRPTW.Model
                     return -1; 
                 }
 
-                if(currentVehicleLoad + currentNode.Demand <= maxVehicleLoad)
-                {
+                //if(currentVehicleLoad + currentNode.Demand <= maxVehicleLoad)
+                //{
                     currentVehicleLoad += currentNode.Demand;
-                    currentTime = locationController.DistanceBetweenLocations(previousNode, currentNode);
+                    double currentTime1 = locationController.DistanceBetweenLocations(previousNode, currentNode);
                     if (currentTime < currentNode.ReadyTime){ 
-                        currentTime += (currentNode.ReadyTime - currentTime); 
+                        currentTime += (currentNode.ReadyTime - currentTime1); 
                     }
 
-                    if (currentTime + currentNode.Service < currentNode.DueDate)
+                    if (currentTime/* + currentNode.Service */< currentNode.DueDate)
                     {
                         currentTime += currentNode.Service;
 
@@ -251,11 +251,14 @@ namespace VRPTW.Model
                         else
                         {
                             singleRoute.Add(depo.CustomerNr);
-                            Routes.Add(singleRoute.ToArray());
+                            Routes[Routes.Count-1] = (singleRoute.ToArray());
+                            i--;
                             previousNode = depo;
                             currentTime = 0;
                             currentVehicleLoad = 0;
                             vehiclesUsed++;
+                            singleRoute.Clear();
+                            singleRoute.Add(depo.CustomerNr);
                         }
                     }
                     else
@@ -263,11 +266,14 @@ namespace VRPTW.Model
                         singleRoute.Add(depo.CustomerNr);
                         Routes.Add(singleRoute.ToArray());
                         previousNode = depo;
+                        i--;
                         currentTime = 0;
                         currentVehicleLoad = 0;
                         vehiclesUsed++;
+                        singleRoute.Clear();
+                        singleRoute.Add(depo.CustomerNr);
                     }
-                }
+                //}
                 
             }
             int visitedNodes = 0;
@@ -281,8 +287,8 @@ namespace VRPTW.Model
                 }
             }
 
-            if (visitedNodes == Nodes.Length)
-            {
+            //if (visitedNodes == Nodes.Length)
+            //{
                 double totalPath = 0;
                 foreach (int[] singleR in Routes)
                 {
@@ -294,11 +300,11 @@ namespace VRPTW.Model
                     }
                 }
                 return totalPath;
-            }
-            else
-            {
-                return -1;
-            }
+            //}
+            //else
+            //{
+            //    return -1;
+            //}
         }
     }
 }

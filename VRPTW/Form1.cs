@@ -16,6 +16,7 @@ namespace VRPTW
     public partial class Form1 : Form
     {
         DataFile dataFile;
+        Map map = new Map();
         ToolTip tooltip = new ToolTip();
 
         public Form1()
@@ -26,7 +27,6 @@ namespace VRPTW
             output_textbox.Text += "init chromo: \r\n" + c.ChromosomeString() + "\r\n";
             c.MutateChromosome(6);
             output_textbox.Text += "mutated chromo: \r\n" + c.ChromosomeString() + "\r\n";
-
             
         }
 
@@ -36,6 +36,9 @@ namespace VRPTW
             if (result == DialogResult.OK) // Test result.
             {
                 dataFile = new DataFile(openFileDialog1.FileName);
+                map.Locations = dataFile.NodeList;
+                map.NumberOfVehicles = dataFile.VehicleNumber;
+                map.VehicleCapacity = dataFile.VehicleCapacity;
                 chart1.Series["Series1"].Points.Clear();
                 output_textbox.Clear();
                 output_textbox.Text += "Vehicle number: " + dataFile.VehicleNumber + "; Vehicle capacity: " + dataFile.VehicleCapacity + "\r\n";

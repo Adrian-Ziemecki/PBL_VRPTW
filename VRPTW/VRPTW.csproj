@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GAController.cs" />
+    <Compile Include="Controller\GARouletteController.cs" />
     <Compile Include="Model\DataFile.cs" />
     <Compile Include="Controller\LocationController.cs" />
     <Compile Include="Form1.cs">

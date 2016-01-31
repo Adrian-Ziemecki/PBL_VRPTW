@@ -43,7 +43,7 @@ namespace VRPTW.Model
             VehicleCapacity = Int32.Parse(fileContent[3].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1]);
             NodeList = new List<Node>();
 
-            for (int i = 6; i < fileContent.Count-1; i++)
+            for (int i = 6; i < fileContent.Count; i++)
             {
                 //Console.Out.WriteLine(fileContent[i]);
                 string[] customerParams = fileContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

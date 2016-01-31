@@ -13,7 +13,7 @@ namespace VRPTW.Model
         public List<int[]> Routes { get; set; }
         public Double Fitness;
         protected static Random rand = new Random((int)DateTime.Now.Ticks);
-        protected static Double mutationRate = 1.0;
+        protected static Double mutationRate = 0.2;
         private LocationController locationController = new LocationController();
 
         public Chromosome(int numberOfCustomerNodes)
@@ -74,7 +74,7 @@ namespace VRPTW.Model
             List<int> nums = new List<int>();
             for (int i = 0; i < Nodes.Length; i++)
             {
-                nums.Add(i);
+                nums.Add(i+1);
             }
             // Add a random element from list of ints and remove this element from list (so there won't be duplicates)
             for (int i = 0; i < Nodes.Length; i++)

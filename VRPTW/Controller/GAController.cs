@@ -89,5 +89,22 @@ namespace VRPTW.Controller
             }
             return s;
         }
+
+        public Chromosome GetBestSolutionFound()
+        {
+            if (Solutions.Count == 0)
+            {
+                throw new System.InvalidOperationException("Cannot find best solution, none currently exist.");
+            }
+
+            Chromosome bestFit = Solutions[0];
+
+            foreach (Chromosome chromosome in Solutions)
+            {
+                if (chromosome.Fitness > bestFit.Fitness) bestFit = chromosome;
+            }
+
+            return bestFit;
+        }
     }
 }

@@ -34,21 +34,28 @@ namespace VRPTW.Controller
             this.geneticRoulette = new GARouletteController();
         }
 
-        public void RunSimulation()
+        public void RunSimulation(Map map)
         {
+            // Get number of clients on the map (without depo)
+            int numberOfClients = map.Locations.Count - 1;
+            // Get max possible value based on due date of depo
+            Double maxValue = Convert.ToDouble(map.Locations.First().DueDate);
+            // Set min possible value as 1.0 - impossible to achieve, but not illegal.
+            Double minValue = 1.0;
             // Generate random initial chromosomes
             for (int i = 0; i < PopulationSize; i++)
             {
-                Solutions[i] = new Chromosome(PopulationSize);
+                Solutions[i] = new Chromosome(numberOfClients);
                 do
                 {
                     Solutions[i].MakeRandomChromosome();
+                    Solutions[i].FitnessFunction(map);
                 } while (Solutions[i].Fitness < 0);
             }
 
             for (int i = 0; i < PopulationSize; i++)
             {
-                Solutions = geneticRoulette.createNewGeneration(Solutions);
+                Solutions = geneticRoulette.createNewGeneration(Solutions, maxValue, minValue, map);
                 if (checkStopConditions() == true) break;
             }
         }

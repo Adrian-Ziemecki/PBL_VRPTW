@@ -207,7 +207,7 @@ namespace VRPTW.Model
             return false;
         }
 
-        public double fitnessFunction(Map map)
+        public double FitnessFunction(Map map)
         {
 
             double currentTime = 0;

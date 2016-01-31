@@ -52,20 +52,29 @@ namespace VRPTW.Controller
             this.MutProb = mutProb;
         }
 
-        public List<Chromosome> createNewGeneration(List<Chromosome> currentGeneration)
+        public List<Chromosome> createNewGeneration(List<Chromosome> currentGeneration, Double maxValue, Double minValue, Map map)
         {
             int populationSize = currentGeneration.Count;
             int nodeSize = currentGeneration.First().Nodes.Length;
-            Double overallFitness = getOverallFitness(currentGeneration);
             Double[] selectionProb = new Double[populationSize];
+            Double[] fitnessWithMaxMinValue = new Double[populationSize];
             List<Chromosome> newGeneration = new List<Chromosome>(populationSize);
+
             // Using the same loop for populating the new generation list and
-            // calculating the probability of selecting each chromosome from the old generation.
+            // calculating the fitness for minimum with resprect to maxValue
             for (int i = 0; i < populationSize; i++)
             {
                 newGeneration[i] = new Chromosome(nodeSize);
+                fitnessWithMaxMinValue[i] = maxValue + minValue - currentGeneration[i].Fitness;
+            }
 
-                selectionProb[i] = (overallFitness - currentGeneration[i].Fitness) / overallFitness;
+            // Get the overall fitness for modified fitness'
+            Double overallFitness = getOverallFitness(fitnessWithMaxMinValue);
+
+            // Calculating probabilities for each modified fitness
+            for (int i = 0; i < populationSize; i++)
+            {
+                selectionProb[i] = fitnessWithMaxMinValue[i] / overallFitness;
             }
 
             // Computing the distribution for each chromosome
@@ -100,6 +109,7 @@ namespace VRPTW.Controller
                     case 0:
                         int reproductionChromosome = selectChromosome(distribution, populationSize);
                         newGeneration[i] = currentGeneration[reproductionChromosome];
+                        newGeneration[i].FitnessFunction(map);
                         break;
                     case 1:
                         int parent1 = selectChromosome(distribution, populationSize);
@@ -111,13 +121,16 @@ namespace VRPTW.Controller
                         int startingIndex = rand.Next(nodeSize);
                         int endingIndex = rand.Next(startingIndex, nodeSize);
                         newGeneration[i].CrossChromosomeWithParents(currentGeneration[parent1], currentGeneration[parent2], startingIndex, endingIndex);
+                        newGeneration[i].FitnessFunction(map);
                         newGeneration[i + 1].CrossChromosomeWithParents(currentGeneration[parent2], currentGeneration[parent1], startingIndex, endingIndex);
+                        newGeneration[i + 1].FitnessFunction(map);
                         i++;
                         break;
                     case 2:
                         int mutationChromosome = selectChromosome(distribution, populationSize);
                         newGeneration[i] = currentGeneration[i];
                         newGeneration[i].MutateChromosome();
+                        newGeneration[i].FitnessFunction(map);
                         break;
                 }
             }
@@ -128,19 +141,20 @@ namespace VRPTW.Controller
                 while (newGeneration[i].Fitness < 0)
                 {
                     newGeneration[i].MakeRandomChromosome();
+                    newGeneration[i].FitnessFunction(map);
                 }
             }
 
             return newGeneration;
         }
 
-        private Double getOverallFitness(List<Chromosome> currentGeneration)
+        private Double getOverallFitness(Double[] currentGenerationFitness)
         {
             Double overallFitness = 0;
 
-            foreach (Chromosome chromosome in currentGeneration)
+            foreach (Double fitness in currentGenerationFitness)
             {
-                overallFitness += chromosome.Fitness;
+                overallFitness += fitness;
             }
 
             return overallFitness;

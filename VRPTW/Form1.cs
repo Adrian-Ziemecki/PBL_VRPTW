@@ -152,6 +152,7 @@ namespace VRPTW
                 chart1.Series["Route_" + i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             }
             chart1.SaveImage(inputFilename + ".png", ChartImageFormat.Png);
+            File.WriteAllText(inputFilename + "_solution.txt", output_textbox.Text);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

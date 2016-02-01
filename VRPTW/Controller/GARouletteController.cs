@@ -60,6 +60,7 @@ namespace VRPTW.Controller
             Double[] fitnessWithMaxMinValue = new Double[populationSize];
             List<Chromosome> newGeneration = new List<Chromosome>(populationSize);
             List<Chromosome> finalGeneration = currentGeneration;
+            Double maxLocalValue = getMaxLocalValue(currentGeneration, maxValue);
 
             // Using the same loop for populating the new generation list and
             // calculating the fitness for minimum with resprect to maxValue
@@ -186,6 +187,18 @@ namespace VRPTW.Controller
                 if (generation[i].Fitness > generation[worstIndex].Fitness) worstIndex = i;
             }
             return worstIndex;
+        }
+
+        private Double getMaxLocalValue(List<Chromosome> generation, Double defaultMaxValue)
+        {
+            Double maxVal = defaultMaxValue;
+
+            foreach (Chromosome chromosome in generation)
+            {
+                if (chromosome.Fitness > maxVal) maxVal = chromosome.Fitness + 1;
+            }
+
+            return maxVal;
         }
     }
 }

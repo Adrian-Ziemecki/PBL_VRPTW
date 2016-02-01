@@ -39,7 +39,9 @@ namespace VRPTW.Controller
             // Get number of clients on the map (without depo)
             int numberOfClients = map.Locations.Count - 1;
             // Get max possible value based on due date of depo
-            Double maxValue = Convert.ToDouble(map.Locations.First().DueDate);
+            // Double maxValue = Convert.ToDouble(map.Locations.First().DueDate);
+            // Set an absurdly high maxValue
+            Double maxValue = 8000;
             // Set min possible value as 1.0 - impossible to achieve, but not illegal.
             Double minValue = 1.0;
             // Generate random initial chromosomes
@@ -64,8 +66,8 @@ namespace VRPTW.Controller
             {
                 Solutions = geneticRoulette.createNewGeneration(Solutions, maxValue, minValue, map);
                 if (checkStopConditions() == true) break;
-                Chromosome ch = GetBestSolutionFound();
-                Console.WriteLine("best " + ch.FitnessFunction(map) + ", routes " + ch.Routes.Count());
+                //Chromosome ch = GetBestSolutionFound();
+                //Console.WriteLine("best " + ch.FitnessFunction(map) + ", routes " + ch.Routes.Count());
             }
         }
 

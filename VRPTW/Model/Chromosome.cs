@@ -224,8 +224,8 @@ namespace VRPTW.Model
                     return -1;
                 }
 
-                //if(currentVehicleLoad + currentNode.Demand <= maxVehicleLoad)
-                //{
+                if(currentVehicleLoad + currentNode.Demand <= maxVehicleLoad)
+                {
                     currentVehicleLoad += currentNode.Demand;
                     currentTime += locationController.DistanceBetweenLocations(previousNode, currentNode);
                     if (currentTime < currentNode.ReadyTime)
@@ -233,7 +233,7 @@ namespace VRPTW.Model
                         currentTime += (currentNode.ReadyTime - currentTime); 
                     }
 
-                    if (currentTime/* + currentNode.Service */< currentNode.DueDate)
+                    if (currentTime < currentNode.DueDate)
                     {
                         currentTime += currentNode.Service;
 
@@ -244,8 +244,7 @@ namespace VRPTW.Model
                         }
                         else
                         {
-                            singleRoute.Add(depo.CustomerNr);
-                            Routes[Routes.Count-1] = (singleRoute.ToArray());
+                            singleRoute[singleRoute.Count - 1] = depo.CustomerNr;
                             i--;
                             previousNode = depo;
                             currentTime = 0;
@@ -267,7 +266,18 @@ namespace VRPTW.Model
                         singleRoute.Clear();
                         singleRoute.Add(depo.CustomerNr);
                     }
-                //}
+                }
+                else
+                {
+                    singleRoute[singleRoute.Count - 1] = depo.CustomerNr;
+                    i--;
+                    previousNode = depo;
+                    currentTime = 0;
+                    currentVehicleLoad = 0;
+                    vehiclesUsed++;
+                    singleRoute.Clear();
+                    singleRoute.Add(depo.CustomerNr);
+                }
                     if (i == Nodes.Length - 1) {
                         if (singleRoute.Count == 2) { singleRoute.Add(depo.CustomerNr); }
                         if (Routes.Contains(singleRoute.ToArray()) == false) { Routes.Add(singleRoute.ToArray()); }

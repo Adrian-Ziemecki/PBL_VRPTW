@@ -64,6 +64,8 @@ namespace VRPTW.Controller
             {
                 Solutions = geneticRoulette.createNewGeneration(Solutions, maxValue, minValue, map);
                 if (checkStopConditions() == true) break;
+                Chromosome ch = GetBestSolutionFound();
+                Console.WriteLine("best " + ch.FitnessFunction(map) + ", routes " + ch.Routes.Count());
             }
         }
 

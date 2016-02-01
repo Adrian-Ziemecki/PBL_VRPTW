@@ -43,13 +43,13 @@ namespace VRPTW
                 chart1.Series.Clear();
                 chart1.Series.Add("Points");
                 chart1.Series["Points"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-                output_textbox.Clear();
-                output_textbox.Text += "Vehicle number: " + dataFile.VehicleNumber + "; Vehicle capacity: " + dataFile.VehicleCapacity + "\r\n";
-                output_textbox.Text += "Nodes:\r\n";
-                output_textbox.Text += "ID\tx\ty\tDemand\tReady\tDue\tService\r\n";
+                //output_textbox.Clear();
+                //output_textbox.Text += "Vehicle number: " + dataFile.VehicleNumber + "; Vehicle capacity: " + dataFile.VehicleCapacity + "\r\n";
+                //output_textbox.Text += "Nodes:\r\n";
+                //output_textbox.Text += "ID\tx\ty\tDemand\tReady\tDue\tService\r\n";
                 foreach (Node n in dataFile.NodeList)
                 {
-                    output_textbox.Text += n.CustomerNr + "\t" + n.X + "\t" + n.Y + "\t" + n.Demand + "\t" + n.ReadyTime + "\t" + n.DueDate + "\t" + n.Service + "\r\n";
+                    //output_textbox.Text += n.CustomerNr + "\t" + n.X + "\t" + n.Y + "\t" + n.Demand + "\t" + n.ReadyTime + "\t" + n.DueDate + "\t" + n.Service + "\r\n";
                     chart1.Series["Points"].Points.AddXY(n.X, n.Y);
                 }
                 chart1.Series["Points"].Points[0].Color = Color.Red;
@@ -106,11 +106,21 @@ namespace VRPTW
             m.NumberOfVehicles = dataFile.VehicleNumber;
             m.VehicleCapacity = dataFile.VehicleCapacity;
 
-            GAController gac = new GAController(50,100);
-            gac.RunSimulation(m);
-
             output_textbox.Clear();
-            output_textbox.Text = gac.GetSolutionText();
+            output_textbox.Text = String.Empty;
+            string s = "";
+
+            GAController gac = new GAController(Int32.Parse(population_tb.Text), Int32.Parse(generations_tb.Text));
+            //for (int i = 0; i < gac.Generations; i++)
+            //{
+                gac.RunSimulation(m);
+                Chromosome ch = gac.GetBestSolutionFound();
+                s += "Cost " + ch.FitnessFunction(map) + ", routes " + ch.Routes.Count() + "\r\n";
+            //}
+            output_textbox.Text = s;
+
+            
+            //output_textbox.Text = gac.GetSolutionText();
 
             // remove everything from chart and redraw points
             chart1.Series.Clear();
@@ -118,7 +128,7 @@ namespace VRPTW
             chart1.Series["Points"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             foreach (Node n in dataFile.NodeList)
             {
-                output_textbox.Text += n.CustomerNr + "\t" + n.X + "\t" + n.Y + "\t" + n.Demand + "\t" + n.ReadyTime + "\t" + n.DueDate + "\t" + n.Service + "\r\n";
+                //output_textbox.Text += n.CustomerNr + "\t" + n.X + "\t" + n.Y + "\t" + n.Demand + "\t" + n.ReadyTime + "\t" + n.DueDate + "\t" + n.Service + "\r\n";
                 chart1.Series["Points"].Points.AddXY(n.X, n.Y);
             }
             chart1.Series["Points"].Points[0].Color = Color.Red;
@@ -140,6 +150,11 @@ namespace VRPTW
                 chart1.Series["Route_" + i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             }
             
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

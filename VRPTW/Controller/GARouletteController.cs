@@ -148,7 +148,7 @@ namespace VRPTW.Controller
                 }
             }
 
-            return newGeneration;
+            return finalGeneration;
         }
 
         private Double getOverallFitness(Double[] currentGenerationFitness)

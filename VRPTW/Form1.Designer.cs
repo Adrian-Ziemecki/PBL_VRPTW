@@ -28,13 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chooseFile_btn = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.output_textbox = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.start_btn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.population_tb = new System.Windows.Forms.TextBox();
+            this.generations_tb = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,31 +64,30 @@
             this.output_textbox.Location = new System.Drawing.Point(133, 12);
             this.output_textbox.Multiline = true;
             this.output_textbox.Name = "output_textbox";
-            this.output_textbox.ReadOnly = true;
             this.output_textbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.output_textbox.Size = new System.Drawing.Size(499, 372);
             this.output_textbox.TabIndex = 2;
             // 
             // chart1
             // 
-            chartArea1.AxisX.Interval = 10D;
-            chartArea1.AxisX.Maximum = 100D;
-            chartArea1.AxisX.MaximumAutoSize = 100F;
-            chartArea1.AxisX.Minimum = 0D;
-            chartArea1.AxisY.Interval = 10D;
-            chartArea1.AxisY.Maximum = 100D;
-            chartArea1.AxisY.MaximumAutoSize = 100F;
-            chartArea1.AxisY.Minimum = 0D;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.Interval = 10D;
+            chartArea2.AxisX.Maximum = 100D;
+            chartArea2.AxisX.MaximumAutoSize = 100F;
+            chartArea2.AxisX.Minimum = 0D;
+            chartArea2.AxisY.Interval = 10D;
+            chartArea2.AxisY.Maximum = 100D;
+            chartArea2.AxisY.MaximumAutoSize = 100F;
+            chartArea2.AxisY.Minimum = 0D;
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.Location = new System.Drawing.Point(638, 12);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Name = "Points";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.Name = "Points";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(627, 589);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
@@ -94,17 +97,56 @@
             // 
             this.start_btn.Location = new System.Drawing.Point(12, 42);
             this.start_btn.Name = "start_btn";
-            this.start_btn.Size = new System.Drawing.Size(75, 23);
+            this.start_btn.Size = new System.Drawing.Size(106, 23);
             this.start_btn.TabIndex = 4;
             this.start_btn.Text = "Start";
             this.start_btn.UseVisualStyleBackColor = true;
             this.start_btn.Click += new System.EventHandler(this.start_btn_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Population";
+            // 
+            // population_tb
+            // 
+            this.population_tb.Location = new System.Drawing.Point(12, 89);
+            this.population_tb.Name = "population_tb";
+            this.population_tb.Size = new System.Drawing.Size(100, 20);
+            this.population_tb.TabIndex = 6;
+            this.population_tb.Text = "20";
+            // 
+            // generations_tb
+            // 
+            this.generations_tb.Location = new System.Drawing.Point(12, 129);
+            this.generations_tb.Name = "generations_tb";
+            this.generations_tb.Size = new System.Drawing.Size(100, 20);
+            this.generations_tb.TabIndex = 8;
+            this.generations_tb.Text = "100";
+            this.generations_tb.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 112);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Generations";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1277, 613);
+            this.Controls.Add(this.generations_tb);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.population_tb);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.start_btn);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.output_textbox);
@@ -125,6 +167,10 @@
         private System.Windows.Forms.TextBox output_textbox;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button start_btn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox population_tb;
+        private System.Windows.Forms.TextBox generations_tb;
+        private System.Windows.Forms.Label label2;
     }
 }
 

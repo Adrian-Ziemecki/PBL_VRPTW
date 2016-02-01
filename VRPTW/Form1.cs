@@ -123,7 +123,7 @@ namespace VRPTW
             }
             chart1.Series["Points"].Points[0].Color = Color.Red;
 
-            Chromosome c = gac.Solutions[0];    // draw routes only for first chromosome for the time being
+            Chromosome c = gac.GetBestSolutionFound();    // draw routes for best chromosome found
             
             // draw all routes in given chromosome
             List<int[]> routes = c.Routes;

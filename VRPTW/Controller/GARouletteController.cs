@@ -46,7 +46,7 @@ namespace VRPTW.Controller
         }
 
         // Constructor
-        public GARouletteController(int crossProb = 34, int mutProb = 33)
+        public GARouletteController(int crossProb = 50, int mutProb = 50)
         {
             this.CrossProb = crossProb;
             this.MutProb = mutProb;
@@ -59,6 +59,7 @@ namespace VRPTW.Controller
             Double[] selectionProb = new Double[populationSize];
             Double[] fitnessWithMaxMinValue = new Double[populationSize];
             List<Chromosome> newGeneration = new List<Chromosome>(populationSize);
+            List<Chromosome> finalGeneration = currentGeneration;
 
             // Using the same loop for populating the new generation list and
             // calculating the fitness for minimum with resprect to maxValue
@@ -139,10 +140,11 @@ namespace VRPTW.Controller
             // Make random chromosomes until there are no more failing solutions
             for (int i = 0; i < populationSize; i++)
             {
-                while (newGeneration[i].Fitness < 0)
+                if (newGeneration[i].Fitness <= 0) continue;
+                int worstChromosomeIndex = getIndexOfWorstChromosome(finalGeneration);
+                if (newGeneration[i].Fitness < finalGeneration[worstChromosomeIndex].Fitness)
                 {
-                    newGeneration[i].MakeRandomChromosome();
-                    newGeneration[i].Fitness = newGeneration[i].FitnessFunction(map);
+                    finalGeneration[worstChromosomeIndex] = newGeneration[i];
                 }
             }
 
@@ -174,6 +176,16 @@ namespace VRPTW.Controller
                 }
             }
             return selectedChromosome;
+        }
+
+        private int getIndexOfWorstChromosome(List<Chromosome> generation)
+        {
+            int worstIndex = 0;
+            for (int i = 0; i < generation.Count; i++)
+            {
+                if (generation[i].Fitness > generation[worstIndex].Fitness) worstIndex = i;
+            }
+            return worstIndex;
         }
     }
 }

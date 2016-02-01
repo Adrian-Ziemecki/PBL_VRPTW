@@ -85,15 +85,15 @@ namespace VRPTW.Model
             }
         }
 
-        public void MutateChromosome(int mutationType = 0)
+        public void MutateChromosome(int mutProb, int mutationType = 0)
         {
-            Double chance = rand.NextDouble();
+            Double chance = rand.Next(0,100);
             int temp1, temp2, rand1, rand2;
             List<int> RouteList;
-            if (chance < mutationRate)
+            if (chance < mutProb)
             {
                 // the mutation will take place, mutation type is the same as in PDF
-                if (mutationType == 0) mutationType = rand.Next(1, 9);
+                if (mutationType == 0) mutationType = rand.Next(1, 5); // MUTATIONS 5-9 SKIPPED
                 switch (mutationType)
                 {
                     case 1:

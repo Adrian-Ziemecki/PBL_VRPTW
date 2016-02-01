@@ -60,7 +60,7 @@ namespace VRPTW.Controller
                 Solutions.Add(c);
             }
 
-            for (int i = 0; i < PopulationSize; i++)
+            for (int i = 0; i < Generations; i++)
             {
                 Solutions = geneticRoulette.createNewGeneration(Solutions, maxValue, minValue, map);
                 if (checkStopConditions() == true) break;

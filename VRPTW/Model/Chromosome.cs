@@ -227,16 +227,18 @@ namespace VRPTW.Model
             {
                 Node currentNode = map.Locations.Where(l => l.CustomerNr == Nodes[i]).Single();
 
-                if (vehiclesUsed > availableVehicles){ 
-                    return -1; 
+                if (vehiclesUsed > availableVehicles)
+                {
+                    return -1;
                 }
 
                 //if(currentVehicleLoad + currentNode.Demand <= maxVehicleLoad)
                 //{
                     currentVehicleLoad += currentNode.Demand;
-                    double currentTime1 = locationController.DistanceBetweenLocations(previousNode, currentNode);
-                    if (currentTime < currentNode.ReadyTime){ 
-                        currentTime += (currentNode.ReadyTime - currentTime1); 
+                    currentTime += locationController.DistanceBetweenLocations(previousNode, currentNode);
+                    if (currentTime < currentNode.ReadyTime)
+                    { 
+                        currentTime += (currentNode.ReadyTime - currentTime); 
                     }
 
                     if (currentTime/* + currentNode.Service */< currentNode.DueDate)
@@ -274,7 +276,10 @@ namespace VRPTW.Model
                         singleRoute.Add(depo.CustomerNr);
                     }
                 //}
-                
+                    if (i == Nodes.Length - 1) {
+                        if (singleRoute.Count == 2) { singleRoute.Add(depo.CustomerNr); }
+                        if (Routes.Contains(singleRoute.ToArray()) == false) { Routes.Add(singleRoute.ToArray()); }
+                    }
             }
             int visitedNodes = 0;
             foreach (int[] singleR in Routes)
@@ -287,8 +292,8 @@ namespace VRPTW.Model
                 }
             }
 
-            //if (visitedNodes == Nodes.Length)
-            //{
+            if (visitedNodes == Nodes.Length)
+            {
                 double totalPath = 0;
                 foreach (int[] singleR in Routes)
                 {
@@ -300,11 +305,11 @@ namespace VRPTW.Model
                     }
                 }
                 return totalPath;
-            //}
-            //else
-            //{
-            //    return -1;
-            //}
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 }

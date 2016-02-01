@@ -106,7 +106,7 @@ namespace VRPTW
             m.NumberOfVehicles = dataFile.VehicleNumber;
             m.VehicleCapacity = dataFile.VehicleCapacity;
 
-            GAController gac = new GAController(50,10000);
+            GAController gac = new GAController(50,100);
             gac.RunSimulation(m);
 
             output_textbox.Clear();

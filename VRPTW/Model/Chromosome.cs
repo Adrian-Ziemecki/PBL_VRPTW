@@ -165,20 +165,54 @@ namespace VRPTW.Model
             }
         }
 
-        // Print chromosome route to readable form
-        public String ChromosomeString()
+        // Print chromosome node to readable form
+        public String ChromosomeNodeString()
         {
             if (Nodes.Length == 0) return "{}";
 
-            String chromosome = "{";
+            String nodeString = "{";
             foreach (int node in Nodes)
             {
-                chromosome += node.ToString() + ",";
+                nodeString += node.ToString() + ",";
             }
-            chromosome.Remove(chromosome.Length - 1);
-            chromosome += "}";
+            nodeString = nodeString.Remove(nodeString.Length - 1);
+            nodeString += "}";
 
-            return chromosome;
+            return nodeString;
+        }
+
+        public String ChromosomeRouteString()
+        {
+            if (Routes.Count == 0) return "{}";
+
+            String routeString = "{";
+            foreach (int[] route in Routes)
+            {
+                routeString += "{";
+                foreach (int node in route)
+                {
+                    routeString += node.ToString() + ",";
+                }
+                routeString = routeString.Remove(routeString.Length - 1);
+                routeString += "},";
+            }
+            routeString = routeString.Remove(routeString.Length - 1);
+            routeString += "}";
+            return routeString;
+        }
+
+        public void fixRoutes()
+        {
+            for (int i = 0; i < Routes.Count; i++)
+            {
+                if (Routes[i].Last() != 0)
+                {
+                    int[] tempRoute = new int[Routes[i].Length + 1];
+                    Routes[i].CopyTo(tempRoute, 0);
+                    Routes.RemoveAt(i);
+                    Routes.Insert(i, tempRoute);
+                }
+            }
         }
 
         private void clearRoute()

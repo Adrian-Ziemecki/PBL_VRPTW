@@ -115,7 +115,8 @@ namespace VRPTW
             //{
                 gac.RunSimulation(m);
                 Chromosome ch = gac.GetBestSolutionFound();
-                s += "Cost " + ch.FitnessFunction(map) + ", routes " + ch.Routes.Count() + "\r\n";
+                ch.fixRoutes();
+                s += "Cost: " + ch.Fitness + ", routes number: " + ch.Routes.Count() + ", routes:" + ch.ChromosomeRouteString() + "\r\n";
             //}
             output_textbox.Text = s;
 

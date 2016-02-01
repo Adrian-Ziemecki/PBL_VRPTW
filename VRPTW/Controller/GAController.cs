@@ -80,7 +80,7 @@ namespace VRPTW.Controller
         public void PrintSolutions()
         {
             foreach (Chromosome c in Solutions) {
-                System.Console.WriteLine(c.ChromosomeString());
+                System.Console.WriteLine(c.ChromosomeNodeString());
             }
         }
 
@@ -89,7 +89,7 @@ namespace VRPTW.Controller
             string s = "";
             foreach (Chromosome c in Solutions)
             {
-                s = s + c.ChromosomeString() + "\r\n";
+                s = s + c.ChromosomeNodeString() + "\r\n";
             }
             return s;
         }

@@ -19,6 +19,7 @@ namespace VRPTW
         DataFile dataFile = null;
         Map map = new Map();
         ToolTip tooltip = new ToolTip();
+        String inputFilename = "";
 
         public Form1()
         {
@@ -36,6 +37,7 @@ namespace VRPTW
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
+                inputFilename = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
                 dataFile = new DataFile(openFileDialog1.FileName);
                 map.Locations = dataFile.NodeList;
                 map.NumberOfVehicles = dataFile.VehicleNumber;
@@ -119,7 +121,6 @@ namespace VRPTW
                 s += "Cost: " + ch.Fitness + ", routes number: " + ch.Routes.Count() + ", routes:" + ch.ChromosomeRouteString() + "\r\n";
             //}
             output_textbox.Text = s;
-
             
             //output_textbox.Text = gac.GetSolutionText();
 
@@ -150,7 +151,7 @@ namespace VRPTW
 
                 chart1.Series["Route_" + i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             }
-            
+            chart1.SaveImage(inputFilename + ".png", ChartImageFormat.Png);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

@@ -85,91 +85,83 @@ namespace VRPTW.Model
             }
         }
 
-        public void MutateChromosome(int mutProb, int mutationType = 0)
+        public void MutateChromosome(int mutationType = 0)
         {
-            Double chance = rand.Next(0,100);
             int temp1, temp2, rand1, rand2;
             List<int> RouteList;
-            if (chance < mutProb)
+            // the mutation will take place, mutation type is the same as in PDF
+            if (mutationType == 0) mutationType = rand.Next(1, 5); // MUTATIONS 5-9 SKIPPED
+            switch (mutationType)
             {
-                // the mutation will take place, mutation type is the same as in PDF
-                if (mutationType == 0) mutationType = rand.Next(1, 5); // MUTATIONS 5-9 SKIPPED
-                switch (mutationType)
-                {
-                    case 1:
-                        rand1 = rand.Next(0, Nodes.Length - 2);
-                        temp1 = Nodes[rand1];
-                        Nodes[rand1] = Nodes[rand1 + 1];
-                        Nodes[rand1 + 1] = temp1;
-                        break;
-                    case 2:
-                        RouteList = Nodes.ToList<int>();
-                        rand1 = rand.Next(0, RouteList.Count - 2);
-                        rand2 = rand.Next(0, RouteList.Count - 2);
-                        while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
-                        temp1 = RouteList[rand1];
-                        temp2 = RouteList[rand1 + 1];
-                        RouteList.RemoveAt(rand1);
-                        RouteList.RemoveAt(rand1);
-                        RouteList.Insert(rand2, temp1);
-                        RouteList.Insert(rand2 + 1, temp2);
-                        Nodes = RouteList.ToArray<int>();
-                        break;
-                    case 3:
-                        RouteList = Nodes.ToList<int>();
-                        rand1 = rand.Next(0, RouteList.Count - 2);
-                        rand2 = rand.Next(0, RouteList.Count - 2);
-                        while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
-                        temp1 = RouteList[rand1];
-                        temp2 = RouteList[rand1 + 1];
-                        RouteList.RemoveAt(rand1);
-                        RouteList.RemoveAt(rand1);
-                        RouteList.Insert(rand2, temp2);
-                        RouteList.Insert(rand2 + 1, temp1);
-                        Nodes = RouteList.ToArray<int>();
-                        break;
-                    case 4:
-                        rand1 = rand.Next(0, Nodes.Length - 1);
-                        rand2 = rand.Next(0, Nodes.Length - 1);
-                        while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 1);  // make sure that rand1 and rand2 are different
-                        temp1 = Nodes[rand1];
-                        Nodes[rand1] = Nodes[rand2];
-                        Nodes[rand2] = temp1;
-                        break;
-                    case 5:
-                        rand1 = rand.Next(0, Nodes.Length - 2);
-                        rand2 = rand.Next(0, Nodes.Length - 2);
-                        while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
-                        RouteList = Nodes.ToList<int>();
-                        temp1 = RouteList[rand1];
-                        RouteList[rand1] = RouteList[rand2];
-                        RouteList.Insert(rand1 + 1, RouteList[rand2 + 1]);
-                        RouteList[rand2 + 1] = temp1;
-                        RouteList.RemoveAt(rand2 + 2);
-                        Nodes = RouteList.ToArray<int>();
-                        break;
-                    case 6:
-                        rand1 = rand.Next(0, Nodes.Length - 2);
-                        rand2 = rand.Next(0, Nodes.Length - 2);
-                        while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
-                        temp1 = Nodes[rand1];
-                        temp2 = Nodes[rand1 + 1];
-                        Nodes[rand1] = Nodes[rand2];
-                        Nodes[rand1 + 1] = Nodes[rand2 + 1];
-                        Nodes[rand2] = temp1;
-                        Nodes[rand2 + 1] = temp2;
-                        break;
-                    case 7:
-                        break;
-                    case 8:
-                        break;
-                    case 9:
-                        break;
-                }
-            }
-            else
-            {
-                // do nothing
+                case 1:
+                    rand1 = rand.Next(0, Nodes.Length - 2);
+                    temp1 = Nodes[rand1];
+                    Nodes[rand1] = Nodes[rand1 + 1];
+                    Nodes[rand1 + 1] = temp1;
+                    break;
+                case 2:
+                    RouteList = Nodes.ToList<int>();
+                    rand1 = rand.Next(0, RouteList.Count - 2);
+                    rand2 = rand.Next(0, RouteList.Count - 2);
+                    while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
+                    temp1 = RouteList[rand1];
+                    temp2 = RouteList[rand1 + 1];
+                    RouteList.RemoveAt(rand1);
+                    RouteList.RemoveAt(rand1);
+                    RouteList.Insert(rand2, temp1);
+                    RouteList.Insert(rand2 + 1, temp2);
+                    Nodes = RouteList.ToArray<int>();
+                    break;
+                case 3:
+                    RouteList = Nodes.ToList<int>();
+                    rand1 = rand.Next(0, RouteList.Count - 2);
+                    rand2 = rand.Next(0, RouteList.Count - 2);
+                    while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
+                    temp1 = RouteList[rand1];
+                    temp2 = RouteList[rand1 + 1];
+                    RouteList.RemoveAt(rand1);
+                    RouteList.RemoveAt(rand1);
+                    RouteList.Insert(rand2, temp2);
+                    RouteList.Insert(rand2 + 1, temp1);
+                    Nodes = RouteList.ToArray<int>();
+                    break;
+                case 4:
+                    rand1 = rand.Next(0, Nodes.Length - 1);
+                    rand2 = rand.Next(0, Nodes.Length - 1);
+                    while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 1);  // make sure that rand1 and rand2 are different
+                    temp1 = Nodes[rand1];
+                    Nodes[rand1] = Nodes[rand2];
+                    Nodes[rand2] = temp1;
+                    break;
+                case 5:
+                    rand1 = rand.Next(0, Nodes.Length - 2);
+                    rand2 = rand.Next(0, Nodes.Length - 2);
+                    while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
+                    RouteList = Nodes.ToList<int>();
+                    temp1 = RouteList[rand1];
+                    RouteList[rand1] = RouteList[rand2];
+                    RouteList.Insert(rand1 + 1, RouteList[rand2 + 1]);
+                    RouteList[rand2 + 1] = temp1;
+                    RouteList.RemoveAt(rand2 + 2);
+                    Nodes = RouteList.ToArray<int>();
+                    break;
+                case 6:
+                    rand1 = rand.Next(0, Nodes.Length - 2);
+                    rand2 = rand.Next(0, Nodes.Length - 2);
+                    while (rand1 == rand2) rand2 = rand.Next(0, Nodes.Length - 2);  // make sure that rand1 and rand2 are different
+                    temp1 = Nodes[rand1];
+                    temp2 = Nodes[rand1 + 1];
+                    Nodes[rand1] = Nodes[rand2];
+                    Nodes[rand1 + 1] = Nodes[rand2 + 1];
+                    Nodes[rand2] = temp1;
+                    Nodes[rand2 + 1] = temp2;
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
             }
         }
 

@@ -130,7 +130,7 @@ namespace VRPTW.Controller
                     case 2:
                         int mutationChromosome = selectChromosome(distribution, populationSize);
                         newGeneration[i] = currentGeneration[mutationChromosome];
-                        newGeneration[i].MutateChromosome(mutProb);
+                        newGeneration[i].MutateChromosome();
                         newGeneration[i].Fitness = newGeneration[i].FitnessFunction(map);
                         break;
                 }
